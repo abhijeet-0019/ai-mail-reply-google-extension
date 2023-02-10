@@ -7,7 +7,12 @@ window.onhashchange = () => {
             if (span.innerText === 'Reply') {
                 span.addEventListener('click', function () {
                     const email = document.querySelector('.adn.ads');
-                    console.log(email.textContent);
+                    // console.log(email.textContent);
+                    //sending message to background.js - service worker
+                    (async function(){
+                        chrome.runtime.sendMessage(email.textContent);
+                    }
+                    )();
                 });
             }
         }

@@ -1,7 +1,8 @@
 {
     "name": "ChatGPT + GMail",
-    "version": "1.1.1",
-    "manifest_version":3,
+    "version": "1.0.0",
+    "description": "This is an extension to connect GMail with GPT",
+    "manifest_version": 3,
     "author": "abhijeet singh",
     "action": {
         "default_popup": "index.html"

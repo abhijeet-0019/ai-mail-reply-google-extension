@@ -1,16 +1,14 @@
-console.log("ello there mate, i am the service worker")
+console.log('Hello world');
 
 chrome.runtime.onMessage.addListener(
-    function(emailContent, sender, sendResponse){
+    function(emailContent, sender, sendResponse) {
         console.log(emailContent);
-        (async function(){
-            
-            //binding all the tabs which match the provided url
+        (async function() {
             const tabs = await chrome.tabs.query({url: 'https://chat.openai.com/*'});
-            //getting the first tab if more than one tabs are opened up with same name
-            const tab = tabs[0]
-            chrome.tabs.sendMessage(tab.id, emailContent);
-        }
-        )();
+            const tab = tabs[0];
+            const gptResponse = await chrome.tabs.sendMessage(tab.id, emailContent);
+            sendResponse(gptResponse);
+        })();
+        return true;
     }
 )

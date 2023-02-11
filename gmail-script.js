@@ -1,21 +1,20 @@
-window.onload = function (){
-window.onhashchange = () => {
-    if (window.location.hash.startsWith('#inbox/')) {
-        console.log('Entered into email');
-        const spans = document.querySelectorAll('span');
-        for (const span of spans) {
-            if (span.innerText === 'Reply') {
-                span.addEventListener('click', function () {
+window.onload = function () {
+    window.onhashchange = () => {
+        if (window.location.hash.startsWith('#inbox/')) {
+            const spans = document.querySelectorAll('span');
+    
+            for (const span of spans) {
+              if (span.innerText === 'Reply') {
+                span.addEventListener('click', function() {
                     const email = document.querySelector('.adn.ads');
-                    // console.log(email.textContent);
-                    //sending message to background.js - service worker
-                    (async function(){
-                        chrome.runtime.sendMessage(email.textContent);
-                    }
-                    )();
+                    (async function() {
+                        const gptResponse = await chrome.runtime.sendMessage(email.textContent);
+                        const gmailTextbox = document.querySelector('[role=textbox]');
+                        gmailTextbox.innerText = gptResponse;
+                    })();
                 });
+              }
             }
         }
-    }
-};
+    };
 }
